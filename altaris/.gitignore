@@ -1,0 +1,46 @@
+# Environnements virtuels
+env/
+venv/
+virtualenv/
+
+# Fichiers compilés Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Fichiers de log
+*.log
+
+# Dossier de gestion des variables d'environnement (si tu utilises dotenv)
+.env
+
+# Bases de données locales (SQLite)
+*.sqlite3
+
+# Dossiers générés par macOS
+.DS_Store
+
+# Dossiers générés par PyCharm ou JetBrains
+.idea/
+
+# Dossiers générés par VSCode
+.vscode/
+
+# Migrations Django (optionnel)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# Fichiers statiques compilés (si générés localement)
+staticfiles/
+
+# Fichiers media uploadés par les utilisateurs (si tu gères des uploads dans ton projet)
+media/
+
+# Configurations spécifiques à certaines plateformes de déploiement
+*.local
+
+# Node.js si tu utilises npm dans ton projet (pour gérer les assets par exemple)
+node_modules/
+
+# Fichiers temporaires
+*.tmp

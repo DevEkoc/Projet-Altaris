@@ -1,0 +1,70 @@
+{% extends "geographie/base.html" %}
+
+{% block title %} {{ province.nom }} {% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container px-5 mb-5">
+        <div class="text-left mb-5">
+            <h1 class="display-5 text-center fw-bolder mb-0"><span class="text-gradient d-inline">{{ province.nom }}</span></h1>
+        </div>
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-11 col-xl-9 col-xxl-8">
+                {% for diocese in dioceses %}
+                    <!-- Province Card -->
+                    <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                        <div class="card-body p-0">
+                            <!-- Première ligne : Photo et dirigeants -->
+                            <div class="row align-items-center">
+                                <!-- Colonne 1 : Petite photo -->
+                                <div class="col-md-4 p-4 text-center">
+                                    {% if diocese.photo %}
+                                        <img class="img-fluid rounded-4" src="{{ diocese.photo.url }}" alt="Photo de {{ diocese.nom }}">
+                                    {% else %}
+                                        <img class="img-fluid rounded-4" src="/media/photos/dioceses/default.jpeg" alt="Photo par défaut pour {{ diocese.nom }}">
+                                    {% endif %}
+                                </div>
+
+                                <!-- Colonne 2 : Liste des dirigeants -->
+                                <div class="col-md-8">
+                                    <h4 class="fw-bolder text-center mb-3">{{ diocese.nom }}</h4>
+                                    <ul class="list-unstyled">
+                                        {% if diocese.type == 'archeveche' %}
+                                            <li><strong>Archevêque :</strong> {{ diocese.eveque }}</li>
+                                        {% else %}
+                                            <li><strong>Evêque :</strong> {{ diocese.eveque }}</li>
+                                        {% endif %}
+                                        <li><strong>Aumônier Diocésain :</strong> {{ diocese.aumonier_diocesain }}</li>
+                                        {% if diocese.eveque_emerite %}
+                                            <li><strong>Evêque Emérite :</strong> {{ province.eveque_emerite }}</li>
+                                        {% endif %}
+                                            <li><strong>Responsable Diocésain :</strong> {{ Vacant }} </li>
+                                        {% if diocese.saint_patron %}
+                                             <li><strong>Saint Patron :</strong> {{ province.saint_patron }}</li>
+                                        {% endif %}
+                                            <li><strong>Zones Pastorales :</strong> {{ 0 }} </li>
+                                            <li><strong>Paroisses :</strong> {{ 0 }} </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Deuxième ligne : Description -->
+                            <div class="row p-4">
+                                <div class="col">
+                                    <p>{{ diocese.description }}</p>
+                                </div>
+                            </div>
+                            <hr> <!-- Séparation entre provinces -->
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+   
+
+{% endblock %}
