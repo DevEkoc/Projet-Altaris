@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from geographie.models import Province
+from geographie.models import Province, Diocese
+
 
 # Create your views here.
 def province_list(request):
@@ -20,5 +21,19 @@ def province_details(request, nom_province):
         {
             'province' : province,
             'dioceses' : dioceses
+        }
+    )
+
+def diocese_details(request, nom_province, nom_diocese):
+    province = Province.objects.get(nom=nom_province)
+    diocese = Diocese.objects.get(nom=nom_diocese)
+    zones = diocese.zones.all()
+    return render(
+        request,
+        "geographie/diocese_details.html",
+        {
+            'province' : province,
+            'diocese' : diocese,
+            'zones' : zones
         }
     )

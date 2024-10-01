@@ -36,7 +36,7 @@ class Diocese(models.Model):
     eveque_emerite = models.CharField(max_length=100, blank=True, null=True)
     saint_patron = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField()
-    photo = models.ImageField(upload_to='photos/dioceses/', blank=True, null=True, default='photos/dioceses/default.jpeg')
+    photo = models.ImageField(upload_to='photos/dioceses/', blank=True, null=True, default='photos/default.jpeg')
     province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='dioceses')
     type = models.CharField(
         max_length=100,
@@ -62,3 +62,15 @@ class Departement(models.Model):
 
     def __str__(self) -> str:
         return self.nom
+
+
+class Zone(models.Model):
+    nom = models.CharField(max_length=100)
+    localisation_gps = models.CharField(max_length=100)
+    adresse = models.TextField()
+    aumonier_zonal = models.CharField(max_length=100)
+    vicaire_episcopal = models.CharField(max_length=100)
+    saint_patron = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField()
+    photo = models.ImageField(upload_to='photos/zones/', blank=True, null=True, default='photos/default.jpeg')
+    diocese = models.ForeignKey(Diocese, on_delete=models.CASCADE, related_name="zones")

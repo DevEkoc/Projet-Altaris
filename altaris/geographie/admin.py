@@ -1,5 +1,5 @@
 from django.contrib import admin
-from geographie.models import Province, Diocese, Region, Departement
+from geographie.models import Province, Diocese, Region, Departement, Zone
 
 
 # Register your models here.
@@ -19,6 +19,8 @@ class DepartementAdmin(admin.ModelAdmin):
     list_display = ['nom', 'id', 'region', 'diocese']
 admin.site.register(Departement, DepartementAdmin)
 
-# admin.site.register(Paroisse)
+class ZoneAdmin(admin.ModelAdmin):
+    list_display = ['nom', 'id', 'aumonier_zonal', 'diocese']
+admin.site.register(Zone, ZoneAdmin)
 
 # admin.site.register(Zone)

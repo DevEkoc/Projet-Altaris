@@ -22,13 +22,13 @@
                                     {% if diocese.photo %}
                                         <img class="img-fluid rounded-4" src="{{ diocese.photo.url }}" alt="Photo de {{ diocese.nom }}">
                                     {% else %}
-                                        <img class="img-fluid rounded-4" src="/media/photos/dioceses/default.jpeg" alt="Photo par défaut pour {{ diocese.nom }}">
+                                        <img class="img-fluid rounded-4" src="/media/photos/default.jpeg" alt="Photo par défaut pour {{ diocese.nom }}">
                                     {% endif %}
                                 </div>
 
                                 <!-- Colonne 2 : Liste des dirigeants -->
                                 <div class="col-md-8">
-                                    <h4 class="fw-bolder text-center mb-3">{{ diocese.nom }}</h4>
+                                    <a href="{% url 'diocese-details' province.nom diocese.nom %}"><h4 class="fw-bolder text-center mb-3">{{ diocese.nom }}</h4></a>
                                     <ul class="list-unstyled">
                                         {% if diocese.type == 'archeveche' %}
                                             <li><strong>Archevêque :</strong> {{ diocese.eveque }}</li>

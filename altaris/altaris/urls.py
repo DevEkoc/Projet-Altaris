@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('province/', views.province_list, name="province-list"),
     path('province/<str:nom_province>/dioceses', views.province_details, name="province-details"),
+    path('province/<str:nom_province>/<str:nom_diocese>/zones', views.diocese_details, name="diocese-details"),
 
     # path('province/add/', views.province-add)
 ]

@@ -1,0 +1,70 @@
+{% extends "geographie/base.html" %}
+
+{% block title %} {{ diocese.nom }} {% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container px-5 mb-5">
+        <div class="text-left mb-5">
+            <h1 class="display-5 text-center fw-bolder mb-0">
+                <span class="text-gradient d-inline">
+                    {% if diocese.type == 'archeveche' %}
+                        L'{{ diocese.nom }}
+                    {% else %}
+                        Le {{ diocese.nom }}
+                    {% endif %}
+                </span>
+            </h1>
+        </div>
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-11 col-xl-9 col-xxl-8">
+                {% for zone in zones %}
+                    <!-- Zone Card -->
+                    <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                        <div class="card-body p-0">
+                            <!-- Première ligne : Photo et dirigeants -->
+                            <div class="row align-items-center">
+                                <!-- Colonne 1 : Petite photo -->
+                                <div class="col-md-4 p-4 text-center">
+                                    {% if zone.photo %}
+                                        <img class="img-fluid rounded-4" src="{{ zone.photo.url }}" alt="Photo de {{ zone.nom }}">
+                                    {% else %}
+                                        <img class="img-fluid rounded-4" src="/media/photos/default.jpeg" alt="Photo par défaut pour {{ zone.nom }}">
+                                    {% endif %}
+                                </div>
+
+                                <!-- Colonne 2 : Liste des dirigeants -->
+                                <div class="col-md-8">
+                                    <h4 class="fw-bolder text-center mb-3">{{ zone.nom }}</h4>
+                                    <ul class="list-unstyled">
+                                        <li><strong>Vicaire Episcopal :</strong> {{ zone.vicaire_episcopal }}</li>
+                                        <li><strong>Aumônier Zonal :</strong> {{ zone.aumonier_zonal }}</li>
+                                        <li><strong>Responsable Zonal :</strong> {{ Vacant }} </li>
+                                        {% if zone.saint_patron %}
+                                             <li><strong>Saint Patron :</strong> {{ zone.saint_patron }}</li>
+                                        {% endif %}
+                                            <li><strong>Paroisses :</strong> {{ 0 }} </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Deuxième ligne : Description -->
+                            <div class="row p-4">
+                                <div class="col">
+                                    <p>{{ zone.description }}</p>
+                                </div>
+                            </div>
+                            <hr> <!-- Séparation entre provinces -->
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+   
+
+{% endblock %}
