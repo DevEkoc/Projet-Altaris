@@ -1,0 +1,80 @@
+{% extends "geographie/base.html" %}
+{% load static %}
+
+{% block title %} {{ zone.nom }} {% endblock %}
+
+{% block styles %}
+<!--    <link href="{% static 'css/styles2.css' %}" rel="stylesheet" />-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+
+    <section class="py-5">
+        <div class="container mt-4">
+            <div class="text-left mb-5">
+                <h3 class="display-5 text-center fw-bolder mb-0">
+                    <span class="text-gradient d-inline">{{ zone.diocese }}</span>
+                </h3>
+                <h4 class="display-5 text-center fw-bolder mb-0">
+                    <span class="text-gradient d-inline">{{ zone.nom }}</span>
+                </h4>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Liste des Paroisses
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Effectif</th>
+                                <th>Curé</th>
+                                <th>Responsable</th>
+                                <th>Contacter</th>
+                                <th>Détails</th>
+                            </tr>
+                        </thead>
+                       <!-- <tfoot>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Position</th>
+                                <th>Bureau</th>
+                                <th>Âge</th>
+                                <th>Date de début</th>
+                                <th>Salaire</th>
+                            </tr>
+                    </tfoot>-->
+                        <tbody>
+                            {% for paroisse in paroisses %}
+                                <tr>
+                                    <td>{{ paroisse.nom }}</td>
+                                    <td>{{ paroisse.effectif }}</td>
+                                    <td>{{ paroisse.cure }}</td>
+                                    <td>{{ paroisse.responsable }}</td>
+                                    <td><input type="button" value="Contacter"></td>
+                                    <td><input type="button" value="Détails"></td>
+                                </tr>
+                            {% endfor %}
+                        <!-- Ajouter d'autres lignes ici -->
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
+{% endblock %}

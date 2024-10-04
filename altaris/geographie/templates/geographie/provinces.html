@@ -6,8 +6,9 @@
     <!-- Provinces Section-->
     <section class="py-5">
         <div class="container px-5 mb-5">
-            <div class="text-left mb-5">
+            <div class="text-center mb-5">
                 <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Provinces Ecclésiastiques du Cameroun</span></h1>
+                <a href="{% url 'province-add' %}" class="btn btn-primary mt-4">Ajouter une Province</a>
             </div>
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-11 col-xl-9 col-xxl-8">
@@ -17,7 +18,7 @@
                             <div class="card-body p-0">
                                 <div class="d-flex align-items-center">
                                     <div class="p-5">
-                                        <h2 class="fw-bolder"><a href="{% url 'province-details' nom_province=province.nom %}">{{ province.nom }}</a></h2>
+                                        <h2 class="fw-bolder"><a href="{% url 'province-details' province.slug %}">{{ province.nom }}</a></h2>
                                         <h5 class="fw-bolder">Archevêque : {{ province.archeveque }}</h5>
                                         <p>{{ province.description }}</p>
                                         <p>Cette province compte {{ province.departements.count }} départements répartis sur {{ province.regions.count }} régions.</p>

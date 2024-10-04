@@ -22,11 +22,14 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('province/', views.province_list, name="province-list"),
-    path('province/<str:nom_province>/dioceses', views.province_details, name="province-details"),
-    path('province/<str:nom_province>/<str:nom_diocese>/zones', views.diocese_details, name="diocese-details"),
+    path('provinces/', views.provinces_list, name="provinces-list"),
+    path('provinces/<slug:slug>/dioceses', views.province_details, name="province-details"),
+    path('provinces/<slug:province_slug>/<slug:diocese_slug>/zones', views.diocese_details, name="diocese-details"),
+    path('provinces/<slug:province_slug>/<slug:diocese_slug>/zones/<slug:zone_slug>', views.zone_details, name="zone-details"),
 
-    # path('province/add/', views.province-add)
+
+    path('provinces/add/', views.province_add, name="province-add"),
+    path('provinces/<slug:province_slug>/dioceses/add/', views.diocese_add, name="diocese-add"),
 ]
 
 if settings.DEBUG:

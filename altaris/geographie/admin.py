@@ -1,5 +1,7 @@
 from django.contrib import admin
-from geographie.models import Province, Diocese, Region, Departement, Zone
+from geographie.models import Province, Diocese, Region, Departement, Zone, Paroisse
+from django.forms import TextInput, Textarea
+from django.db import models
 
 
 # Register your models here.
@@ -23,4 +25,6 @@ class ZoneAdmin(admin.ModelAdmin):
     list_display = ['nom', 'id', 'aumonier_zonal', 'diocese']
 admin.site.register(Zone, ZoneAdmin)
 
-# admin.site.register(Zone)
+class ParoisseAdmin(admin.ModelAdmin):
+    list_display = ['nom', 'id', 'cure', 'aumonier_paroissial', 'zone']
+admin.site.register(Paroisse, ParoisseAdmin)

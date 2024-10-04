@@ -6,8 +6,9 @@
 
 <section class="py-5">
     <div class="container px-5 mb-5">
-        <div class="text-left mb-5">
+        <div class="text-center mb-5">
             <h1 class="display-5 text-center fw-bolder mb-0"><span class="text-gradient d-inline">{{ province.nom }}</span></h1>
+            <a href="{% url 'diocese-add' province.slug %}" class="btn btn-primary mt-4">Ajouter un Diocèse</a>
         </div>
         <div class="row gx-5 justify-content-center">
             <div class="col-lg-11 col-xl-9 col-xxl-8">
@@ -28,7 +29,7 @@
 
                                 <!-- Colonne 2 : Liste des dirigeants -->
                                 <div class="col-md-8">
-                                    <a href="{% url 'diocese-details' province.nom diocese.nom %}"><h4 class="fw-bolder text-center mb-3">{{ diocese.nom }}</h4></a>
+                                    <a href="{% url 'diocese-details' province_slug=province.slug diocese_slug=diocese.slug %}"><h4 class="fw-bolder text-center mb-3">{{ diocese.nom }}</h4></a>
                                     <ul class="list-unstyled">
                                         {% if diocese.type == 'archeveche' %}
                                             <li><strong>Archevêque :</strong> {{ diocese.eveque }}</li>
