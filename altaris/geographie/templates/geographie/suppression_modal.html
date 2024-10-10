@@ -1,0 +1,29 @@
+{% load static %}
+<!-- Modal -->
+<div class="modal fade" id="deleteModal{{ province.id_province }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel{{ province.id_province }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title " id="deleteModalLabel{{ province.id_province }}">Confirmez la suppression</h4>
+            {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
+        </div>           
+        <div class="modal-body">
+            Etes-vous sûr de vouloir supprimer cet élément ?
+            <h4 class="fw-bold">
+                {{ province.nom }}
+            </h4>
+            <p>
+                Tous les éléments associés (diocèses, zones, paroisses) seront également supprimés.
+            </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non - Fermer</button>
+            <form method="post" action="{% url 'province-delete' province.slug %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

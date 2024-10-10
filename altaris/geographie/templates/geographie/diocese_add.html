@@ -2,26 +2,28 @@
 {% load crispy_forms_tags %}
 
 {% block title %}Ajout d'une Diocèse{% endblock %}
-{% block styles %}
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-{% endblock %}
+
 {% block content %}
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="mb-3">
-                    <h4 class="display-8 text-center fw-bolder mb-0">
-                        <span class="text-gradient d-inline">Ajout d'un Diocèse dans la {{ province.nom }}</span>
-                    </h4>
-                </div>
-                <form action="" method="post" class="shadow p-4">
-                    {% csrf_token %}
-                    {{ form }}  <!-- Le formulaire sera automatiquement rendu avec form_snippet.html -->
-                    <div class="mb-3 text-center">
-                        <button type="submit" class="btn btn-primary">Ajouter le diocèse</button>
+    <section class="py-5">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="mb-3">
+                        <h4 class="display-8 text-center fw-bolder mb-0">
+                            <span class="text-gradient d-inline">Ajout d'un Diocèse dans la {{ province.nom }}</span>
+                        </h4>
                     </div>
-                </form>
+                    <form action="" method="post" class="shadow p-4" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form }}  <!-- Le formulaire sera automatiquement rendu avec form_snippet.html -->
+                        <input type="hidden" name="province" value="{{ form.province.value }}">
+<!--                        <p><strong>Province :</strong> {{ province.nom }}</p>  &lt;!&ndash; Affichage du texte pour la province &ndash;&gt;-->
+                        <div class="mb-3 text-center">
+                            <button type="submit" class="btn btn-primary">Ajouter le diocèse</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

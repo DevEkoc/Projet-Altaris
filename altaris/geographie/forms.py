@@ -1,5 +1,7 @@
 from django import forms
 from .models import Province, Diocese, Zone, Paroisse
+from django.core.exceptions import ValidationError
+import os
 
 class ProvinceForm(forms.ModelForm):
     template_name = 'geographie/snippets/province_form_snippet.html'
@@ -22,13 +24,32 @@ class ProvinceForm(forms.ModelForm):
 class DioceseForm(forms.ModelForm):
     template_name = 'geographie/snippets/diocese_form_snippet.html'
 
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo')
+
+        if photo:
+            # Vérification des extensions autorisées
+            valid_extensions = ['jpg', 'jpeg', 'png']
+            extension = photo.name.split('.')[-1].lower()
+            if extension not in valid_extensions:
+                raise ValidationError('Seuls les fichiers JPG, JPEG et PNG sont autorisés.')
+
+            print(f"Taille du fichier : {photo.size} octets")  # Debugging pour vérifier la taille
+
+            # Limitation de la taille à 800 Ko
+            max_size = 800 * 1024
+            if photo.size > max_size:
+                raise ValidationError("La taille maximale autorisée pour la photo est de 800 Ko.")
+
+        return photo
+
+
     class Meta:
         model = Diocese
-        fields = ['nom', 'localisation_gps', 'adresse', 'aumonier_diocesain', 'eveque', 'eveque_emerite', 'saint_patron', 'description', 'photo', 'province', 'type']
+        fields = ['nom', 'localisation_gps', 'adresse', 'aumonier_diocesain', 'eveque', 'eveque_emerite', 'saint_patron', 'description', 'photo', 'type']
         labels = {
             'nom': 'Nom du Diocèse',
-            'province': 'Province Ecclésiastique',
-            'type' : 'Type de diocèse',
+            'type' : 'Choisissez le type de diocèse',
             'eveque' : 'Nom de l\'Evêque',
             'eveque_emerite' : 'Nom de l\'Evêque Emérite',
             'aumonier_diocesain' : 'Nom de l\'Aumônier Diocésain',
@@ -40,7 +61,6 @@ class DioceseForm(forms.ModelForm):
         }
         widgets = {
             'nom': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du diocèse'}),
-            'province': forms.Select(attrs={'class': 'form-control'}),
             'type': forms.Select(attrs={'class': 'form-control'}),
             'eveque': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom de l\'évêque'}),
             'eveque_emerite': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom de l\'évêque émérite', 'optional': True}),
@@ -52,12 +72,7 @@ class DioceseForm(forms.ModelForm):
             'photo': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 
-        def __init__(self, *args, **kwargs):
-            province = kwargs.pop('province', None)  # Récupère la province courante
-            super().__init__(*args, **kwargs)
-            if province:
-                self.fields['province'].initial = province  # Pré-remplir avec la province
-                self.fields['province'].disabled = True  # Désactiver le champ
+
 
 class ZoneForm(forms.ModelForm):
     class Meta:
@@ -94,3 +109,15 @@ class ParoisseForm(forms.ModelForm):
             'adresse': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'photo': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
+
+
+
+
+
+
+
+
+
+
+
+

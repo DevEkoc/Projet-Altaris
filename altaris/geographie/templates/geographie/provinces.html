@@ -7,17 +7,26 @@
     <section class="py-5">
         <div class="container px-5 mb-5">
             <div class="text-center mb-5">
-                <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Provinces Ecclésiastiques du Cameroun</span></h1>
+                {% for message in messages %}
+                    <div class="alert alert-info" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                <h1 class="display-5 fw-bolder mb-0">
+                    <span class="text-gradient d-inline">Provinces Ecclésiastiques du Cameroun</span>
+                </h1>
                 <a href="{% url 'province-add' %}" class="btn btn-primary mt-4">Ajouter une Province</a>
             </div>
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-11 col-xl-9 col-xxl-8">
+
                     {% for province in provinces %}
                         <!-- Province Card -->
                         <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
                             <div class="card-body p-0">
                                 <div class="d-flex align-items-center">
-                                    <div class="p-5">
+                                    <div class="p-5 pb-0 mb-0">
                                         <h2 class="fw-bolder"><a href="{% url 'province-details' province.slug %}">{{ province.nom }}</a></h2>
                                         <h5 class="fw-bolder">Archevêque : {{ province.archeveque }}</h5>
                                         <p>{{ province.description }}</p>
@@ -42,13 +51,23 @@
                                                 </ol>   
                                             {% endfor %}
                                     
-                                            <hr> <!-- Séparation entre provinces -->
+                                            <hr class="m-0 p-1"> <!-- Séparation entre provinces -->
                                     </div>
-                                    <!-- <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." /> -->
+                                    
                                 </div>
                             </div>
+                            <div class="text-center mb-2">
+                                <a href="{% url 'province-change' slug=province.slug %}" class="btn btn-outline-primary me-3">
+                                    <i class="fas fa-edit fa-lg"></i> Modifier
+                                </a>
+                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ province.id_province }}">
+                                    <i class="fas fa-trash-alt fa-lg"></i> Supprimer
+                                </button>
+                            </div>
                         </div>
+                        {% include "geographie/suppression_modal.html" %}
                     {% endfor %}
+
                 </div>
             </div>
         </div>

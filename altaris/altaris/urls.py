@@ -29,7 +29,14 @@ urlpatterns = [
 
 
     path('provinces/add/', views.province_add, name="province-add"),
+    path('provinces/<slug:slug>/change/', views.province_change, name="province-change"),
+    path('provinces/<slug:slug>/delete/', views.province_delete, name="province-delete"),
+
     path('provinces/<slug:province_slug>/dioceses/add/', views.diocese_add, name="diocese-add"),
+    path('provinces/<slug:province_slug>/<slug:diocese_slug>/change/', views.diocese_change, name="diocese-change"),
+    path('provinces/<slug:province_slug>/<slug:diocese_slug>/delete/', views.diocese_delete, name="diocese-delete"),
+
+
 ]
 
 if settings.DEBUG:

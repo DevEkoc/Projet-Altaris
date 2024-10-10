@@ -10,7 +10,7 @@ class ProvinceAdmin(admin.ModelAdmin):
 admin.site.register(Province, ProvinceAdmin)
 
 class DioceseAdmin(admin.ModelAdmin):
-    list_display = ['nom', 'id', 'adresse','province', 'type']
+    list_display = ['nom', 'id', 'adresse','province', 'type', 'photo']
 admin.site.register(Diocese, DioceseAdmin)
 
 class RegionAdmin(admin.ModelAdmin):

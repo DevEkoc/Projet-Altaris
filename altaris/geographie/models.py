@@ -1,8 +1,10 @@
+from datetime import datetime
 from enum import unique
+import uuid
 
 from django.db import models
 from django.utils.text import slugify
-
+import os
 # Create your models here.
 class Province(models.Model):
     id_province = models.AutoField(primary_key=True)
@@ -45,6 +47,14 @@ class Diocese(models.Model):
         ('archeveche', 'Archevêché')
     ]
 
+    def rename_photo(instance, filename):
+        # Extraire l'extension du fichier
+        extension = filename.split('.')[-1]
+        # Générer un UUID pour rendre chaque nom de fichier unique
+        unique_id = uuid.uuid4()
+        new_filename = f"{slugify(instance.nom)}_{unique_id}.{extension}"
+        return os.path.join('diocese_photos/', new_filename)
+
     nom = models.CharField(max_length=100, unique=True)
     localisation_gps = models.CharField(max_length=100)
     adresse = models.TextField()
@@ -53,7 +63,7 @@ class Diocese(models.Model):
     eveque_emerite = models.CharField(max_length=100, blank=True, null=True)
     saint_patron = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField()
-    photo = models.ImageField(upload_to='photos/dioceses/', blank=True, null=True, default='photos/default.jpeg')
+    photo = models.ImageField(upload_to=rename_photo, blank=True, null=True, default='photos/default.jpeg')
     province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='dioceses')
     type = models.CharField(
         max_length=100,
@@ -65,11 +75,47 @@ class Diocese(models.Model):
         blank = True,
         unique=True
     )
+    def delete_photo_file(self):
+        """
+        Supprimer physiquement l'ancienne photo du système de fichiers si elle existe.
+        """
+        if self.photo and os.path.isfile(self.photo.path):
+            os.remove(self.photo.path)
+
+    def delete_old_photo(self):
+        """
+        Supprimer l'ancienne photo si elle existe et qu'une nouvelle est uploadée.
+        """
+        if self.pk:  # S'assurer que l'instance existe déjà dans la base de données
+            try:
+                # Récupérer l'ancienne photo avant la mise à jour
+                old_photo = Diocese.objects.get(pk=self.pk).photo
+                # Vérifier si une nouvelle photo est uploadée
+                if old_photo and old_photo != self.photo and os.path.isfile(old_photo.path):
+                    os.remove(old_photo.path)  # Supprimer l'ancienne photo du système de fichiers
+            except Diocese.DoesNotExist:
+                pass
 
     def save(self, *args, **kwargs):
-        if not self.slug:  # Si le slug n'existe pas déjà, le générer
-            self.slug = slugify(self.nom)
+        """
+        Gérer la suppression de l'ancienne photo si une nouvelle est uploadée ou si la photo est supprimée.
+        """
+        # Supprimer l'ancienne photo si une nouvelle est uploadée
+        self.delete_old_photo()
+
+        # Appelle la méthode de sauvegarde par défaut
         super().save(*args, **kwargs)
+
+        # Si la photo a été effacée dans le formulaire, la supprimer du système de fichiers
+        if not self.photo:  # Si la photo a été supprimée via le formulaire
+            self.delete_photo_file()
+
+    def delete(self, *args, **kwargs):
+        """
+        Supprimer la photo du système de fichiers lors de la suppression de l'instance.
+        """
+        self.delete_photo_file()  # Supprime la photo avant de supprimer l'instance
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.nom

@@ -1,0 +1,25 @@
+{% extends "geographie/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Mise à jour de la {{ province.nom }}{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="mb-3">
+                    <h4 class="display-8 text-center fw-bolder mb-0">
+                        <span class="text-gradient d-inline">Mise à jour de la {{ province.nom }}</span>
+                    </h4>
+                </div>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form }}  <!-- Le formulaire sera automatiquement rendu avec form_snippet.html -->
+                    <div class="mb-3 text-center">
+                        <button type="submit" class="btn btn-primary">Mettre à jour la province</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

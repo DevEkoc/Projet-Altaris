@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'geographie',
     'crispy_forms',
     'crispy_bootstrap5',
+    'bootstrap5',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

@@ -13,7 +13,7 @@
         <div class="row gx-5 justify-content-center">
             <div class="col-lg-11 col-xl-9 col-xxl-8">
                 {% for diocese in dioceses %}
-                    <!-- Province Card -->
+                    <!-- Diocèse Card -->
                     <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
                         <div class="card-body p-0">
                             <!-- Première ligne : Photo et dirigeants -->
@@ -38,11 +38,11 @@
                                         {% endif %}
                                         <li><strong>Aumônier Diocésain :</strong> {{ diocese.aumonier_diocesain }}</li>
                                         {% if diocese.eveque_emerite %}
-                                            <li><strong>Evêque Emérite :</strong> {{ province.eveque_emerite }}</li>
+                                            <li><strong>Evêque Emérite :</strong> {{ diocese.eveque_emerite }}</li>
                                         {% endif %}
                                             <li><strong>Responsable Diocésain :</strong> {{ Vacant }} </li>
                                         {% if diocese.saint_patron %}
-                                             <li><strong>Saint Patron :</strong> {{ province.saint_patron }}</li>
+                                             <li><strong>Saint Patron :</strong> {{ diocese.saint_patron }}</li>
                                         {% endif %}
                                             <li><strong>Zones Pastorales :</strong> {{ 0 }} </li>
                                             <li><strong>Paroisses :</strong> {{ 0 }} </li>
@@ -54,6 +54,17 @@
                             <div class="row p-4">
                                 <div class="col">
                                     <p>{{ diocese.description }}</p>
+                                </div>
+                            </div>
+                            <!-- Troisième ligne : Icônes de modification et suppression -->
+                            <div class="row align-items-center text-center mb-3">
+                                <div class="col">
+                                    <a href="{% url 'diocese-change' province_slug=province.slug diocese_slug=diocese.slug %}" class="btn btn-outline-primary me-3">
+                                        <i class="fas fa-edit fa-lg"></i> Modification
+                                    </a>
+                                    <a href="" class="btn btn-outline-danger">
+                                        <i class="fas fa-trash-alt fa-lg"></i> Suppression
+                                    </a>
                                 </div>
                             </div>
                             <hr> <!-- Séparation entre provinces -->
